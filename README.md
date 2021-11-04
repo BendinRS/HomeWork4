@@ -67,13 +67,43 @@ test.tar.gz  zpoolexport
 
 
 [root@server /]# zpool import -d /bendin/tar/zpoolexport otus
-[root@server /]# zpool list
+[root@server /]# zpool list otus
 NAME     SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
-bendin  5.50G  19.3M  5.48G        -         -     0%     0%  1.00x    ONLINE  -
 otus     480M  2.21M   478M        -         -     0%     0%  1.00x    ONLINE  -
-zle      960M  7.38M   953M        -         -     2%     0%  1.00x    ONLINE  -
 
+[root@server /]# zfs get compression,compressratio otus
+NAME  PROPERTY       VALUE     SOURCE
+otus  compression    zle       local
+otus  compressratio  1.00x     -
 
+3. Найти сообщение от преподавателей 
+
+Згружаем файл из гугл диска https://drive.google.com/file/d/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG/view?usp=sharing 
+
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG" -O otus_task2.file && rm -rf /tmp/cookies.txt
+
+Файл был получен командой
+zfs send otus/storage@task2 > otus_task2.file
+
+Создаем файловую систему otus/storage и восстанавливаемся
+
+[root@server bendin]# zfs create otus/storage
+[root@server bendin]# zfs receive otus/storage/task2 < otus_task2.file
+
+[root@server bendin]# cd /otus/storage/
+[root@server storage]# ls
+task2
+[root@server storage]# cd task2/
+[root@server task2]# ls
+10M.file   Moby_Dick.txt      cinderella.tar    homework4.txt  world.sql
+Limbo.txt  War_and_Peace.txt  for_examaple.txt  task1
+[root@server task2]# cd task1/
+[root@server task1]# ls
+README  file_mess
+[root@server task1]# cd file_mess/
+
+[root@server file_mess]# cat secret_message 
+https://github.com/sindresorhus/awesome
 
 
 
