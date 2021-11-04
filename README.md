@@ -43,7 +43,7 @@ zle/zle      26K   832M       26K  /zle/zle
 
 ## Определить настройки pool’a
 
-+Загружаем архив с файлами с гугл диска 
++ Загружаем архив с файлами с гугл диска 
 
 ``` https://drive.google.com/open?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg ```
 
@@ -93,8 +93,8 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 ```
 
 + Файл был получен командой
-```zfs send otus/storage@task2 > otus_task2.file
-```
+``` zfs send otus/storage@task2 > otus_task2.file ```
+
 
 + Создаем файловую систему otus/storage и восстанавливаемся
 ```
